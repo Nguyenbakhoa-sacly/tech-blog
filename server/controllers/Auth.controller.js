@@ -1,15 +1,14 @@
 
 const User = require('../models/User.model');
 const bcrypt = require('bcrypt');
-
+const { errorHandler } = require('../utils/error')
 const authController = {
 
-  signUp: async (req, res) => {
+  signUp: async (req, res, next) => {
     const { username, password, email } = req.body;
     if (!username || !password || !email ||
       email === '' || username === '' || password === '') {
-      return res.status(400).json(
-        { message: 'Invalid email, username or password provided in request' })
+      next(errorHandler(400, ' All fields are required'));
     }
 
     const hashPassword = bcrypt.hashSync(password, 10)
@@ -21,10 +20,10 @@ const authController = {
     try {
       await newUser.save();
       return res.status(200).json({
-        message: 'User saved successfully!'
+        message: 'SignUp successfully!'
       })
     } catch (e) {
-      return res.status(500).json({ message: e.message })
+      next(e);
     }
   }
 }

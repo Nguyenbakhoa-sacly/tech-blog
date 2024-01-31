@@ -14,6 +14,15 @@ app.use(cors());
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
 
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message
+  })
+})
 
 mongoose.connect(process.env.MONGOBD_URL)
   .then(() => {
