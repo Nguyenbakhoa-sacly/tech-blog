@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { errorHandler } = require('../utils/error')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken');
-
+// 2:47:56
 dotenv.config();
 
 const authController = {
