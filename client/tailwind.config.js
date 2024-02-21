@@ -6,7 +6,11 @@ export default {
     'node_modules/flowbite-react/lib/esm/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      padding: {
+        '61px': '61px'
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin'),

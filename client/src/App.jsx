@@ -9,6 +9,8 @@ import Main from './layout/Main'
 import { Route, Routes, } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import PrivateRoute from './components/PrivateRoute'
+import Dashboard from './pages/Dashboard'
 const App = () => {
 
   return (
@@ -20,6 +22,9 @@ const App = () => {
         <Route path='project' element={<Project />} />
         <Route path='sign-in' element={<SignIn />} />
         <Route path='sign-up' element={<SignUp />} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
       </Routes>
       <Footer />
     </>

@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import DashSiderbar from '../components/Dash/DashSiderbar';
+import DashProfile from '../components/Dash/DashProfile';
 
 const Dashboard = () => {
+  const location = useLocation();
+  const [tab, setTab] = useState('');
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tabFromUrl = urlParams.get('tab');
+    console.log(tabFromUrl);
+    if (tabFromUrl) {
+      setTab(tabFromUrl);
+    }
+  }, [location.search])
   return (
-    <div>
-      Dashboad
-    </div>
+    <>
+      <div className='pt-61px min-h-screen flex flex-col md:flex-row '>
+        {/* Siderbar */}
+        <div className='md:w-56'>
+          <DashSiderbar />
+        </div>
+        {/* profile */}
+        {tab === 'profile' && <DashProfile />}
+      </div>
+    </>
   )
 }
 
