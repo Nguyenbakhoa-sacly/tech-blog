@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const userRouter = require('./routes/User.route')
@@ -9,7 +10,7 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-
+app.use(cookieParser());
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);

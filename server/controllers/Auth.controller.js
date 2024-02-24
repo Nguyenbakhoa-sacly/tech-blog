@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const { errorHandler } = require('../utils/error')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken');
-const { response } = require('express');
 // 2:47:56
 dotenv.config();
 
