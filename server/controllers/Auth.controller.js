@@ -52,8 +52,11 @@ const authController = {
       // không trả ra password
 
       const { password: pass, ...rest } = validUser._doc;
-      res.status(200).cookie('access_token', token,
-        { httpOnly: true, secure: true }).json(rest);
+      res
+        .cookie('access_token', token,
+          { httpOnly: true, secure: true })
+        .status(200)
+        .json(rest);
     } catch (e) {
       next(e);
     }
@@ -81,8 +84,11 @@ const authController = {
         const token = jwt.sign({ id: user._id },
           process.env.SECRET_KEY);
         const { password, ...rest } = user._doc;
-        return res.status(200).cookie('access_token', token,
-          { httpOnly: true, secure: true }).json(rest);
+        return res
+          .cookie('access_token', token,
+            { httpOnly: true, secure: true })
+          .status(200)
+          .json(rest);
       }
     } catch (e) {
       next(e);

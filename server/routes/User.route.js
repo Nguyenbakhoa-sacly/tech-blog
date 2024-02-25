@@ -7,4 +7,5 @@ router.put('/update/:userId', verifyToken,
   userController.updateUser);
 router.delete('/delete/:userId', verifyToken,
   userController.deleteUser);
+router.post('/signout', userController.signOut);
 module.exports = router

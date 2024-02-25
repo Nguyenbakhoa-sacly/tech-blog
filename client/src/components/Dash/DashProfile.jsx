@@ -6,7 +6,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable }
 import app from '../../utils/firebase/Firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateError, updateStart, updateSuccess }
+import { updateError, updateStart, updateSuccess, signOutSuccess }
   from '../../redux/user/userSlice';
 import ModalDelete from '../ModalDelete';
 const DashProfile = () => {
@@ -68,8 +68,21 @@ const DashProfile = () => {
       setUpdatedUserError(e.message);
     }
   };
-
-
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/v1/user/signout`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess())
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   useEffect(() => {
     if (imageFile) {
       upLoadImage();
@@ -210,7 +223,7 @@ const DashProfile = () => {
         </form>
         <div className='text-red-500 mt-4 text-sm flex justify-between'>
           <p onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</p>
-          <p className='cursor-pointer'>Sign Out</p>
+          <p onClick={handleSignOut} className='cursor-pointer'>Sign Out</p>
         </div>
         <ModalDelete
           setShowModal={() => setShowModal(false)}
