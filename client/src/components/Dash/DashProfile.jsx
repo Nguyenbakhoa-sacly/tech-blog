@@ -1,6 +1,6 @@
-import { Alert, Button, TextInput } from 'flowbite-react';
+import { Alert, Button, Modal, TextInput } from 'flowbite-react';
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable }
   from 'firebase/storage'
 import app from '../../utils/firebase/Firebase';
@@ -8,10 +8,9 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { updateError, updateStart, updateSuccess }
   from '../../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
-
+import ModalDelete from '../ModalDelete';
 const DashProfile = () => {
-  const { currentUser } = useSelector(state => state.user);
+  const { currentUser, error } = useSelector(state => state.user);
   const filePickerRef = useRef();
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
@@ -21,7 +20,8 @@ const DashProfile = () => {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updatedUserError, setUpdatedUserError] = useState(null);
-
+  //show modal delete
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -29,10 +29,10 @@ const DashProfile = () => {
       setImageFile(file);
       setImageFileUrl(URL.createObjectURL(file));
     }
-  }
+  };
   const handleOnchange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  }
+  };
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     setUpdateUserSuccess(null);
@@ -67,7 +67,9 @@ const DashProfile = () => {
       dispatch(updateError(e.message));
       setUpdatedUserError(e.message);
     }
-  }
+  };
+
+
   useEffect(() => {
     if (imageFile) {
       upLoadImage();
@@ -113,7 +115,7 @@ const DashProfile = () => {
           })
       }
     )
-  }
+  };
   return (
     <>
       <div className='max-w-lg mx-auto p-3 w-full'>
@@ -150,12 +152,12 @@ const DashProfile = () => {
             <img
               src={imageFileUrl || currentUser.profilePicture}
               alt="User"
-
               className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${imageFileUpLoadProgress &&
                 imageFileUpLoadProgress < 100 &&
                 'opacity-60'
                 }`} />
           </div>
+
           {imageFileUpLoadError &&
             <Alert color='failure'>
               {imageFileUpLoadError}
@@ -172,6 +174,13 @@ const DashProfile = () => {
             updatedUserError && (
               <Alert color='failure'>
                 {updatedUserError}
+              </Alert>
+            )
+          }
+          {
+            error && (
+              <Alert color='failure'>
+                {error}
               </Alert>
             )
           }
@@ -200,11 +209,13 @@ const DashProfile = () => {
           </Button>
         </form>
         <div className='text-red-500 mt-4 text-sm flex justify-between'>
-          <p className='cursor-pointer'>Delete Account</p>
+          <p onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</p>
           <p className='cursor-pointer'>Sign Out</p>
         </div>
-
-      </div>
+        <ModalDelete
+          setShowModal={() => setShowModal(false)}
+          showModal={showModal} />
+      </div >
     </>
 
   )
