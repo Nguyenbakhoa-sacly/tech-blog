@@ -8,9 +8,12 @@ const authRouter = require('./routes/Auth.route')
 const app = express();
 
 dotenv.config();
-app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);

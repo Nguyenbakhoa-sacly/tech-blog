@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { errorHandler } = require('../utils/error')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken');
-// 2:47:56
+
 dotenv.config();
 
 const authController = {
@@ -15,7 +15,6 @@ const authController = {
       email === '' || username === '' || password === '') {
       next(errorHandler(400, ' All fields are required'));
     }
-
     const hashPassword = bcrypt.hashSync(password, 10)
     const newUser = new User({
       email: email,
@@ -51,9 +50,10 @@ const authController = {
         process.env.SECRET_KEY
       )
       // không trả ra password
+
       const { password: pass, ...rest } = validUser._doc;
-      return res.status(200).cookie('access_token', token,
-        { httpOnly: true }).json(rest);
+      res.status(200).cookie('access_token', token,
+        { httpOnly: true, secure: true }).json(rest);
     } catch (e) {
       next(e);
     }
@@ -82,7 +82,7 @@ const authController = {
           process.env.SECRET_KEY);
         const { password, ...rest } = user._doc;
         return res.status(200).cookie('access_token', token,
-          { httpOnly: true }).json(rest);
+          { httpOnly: true, secure: true }).json(rest);
       }
     } catch (e) {
       next(e);
