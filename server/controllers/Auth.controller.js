@@ -46,15 +46,13 @@ const authController = {
         return next(errorHandler(400, 'Invalid password'));
       }
       const token = jwt.sign(
-        { userId: validUser._id, username: validUser.username },
+        { userId: validUser._id, isAdmin: validUser.isAdmin },
         process.env.SECRET_KEY
       )
       // không trả ra password
-
       const { password: pass, ...rest } = validUser._doc;
       res
-        .cookie('access_token', token,
-          { httpOnly: true, secure: true })
+        .cookie('access_token', token, { httpOnly: true })
         .status(200)
         .json(rest);
     } catch (e) {
@@ -66,7 +64,8 @@ const authController = {
     try {
       const user = await User.findOne({ email });
       if (user) {
-        const token = jwt.sign({ id: user._id },
+        const token = jwt.sign(
+          { id: user._id, isAdmin: user.isAdmin },
           process.env.SECRET_KEY);
         const { password, ...rest } = user._doc;
         return res.status(200).cookie('access_token', token,
@@ -74,6 +73,7 @@ const authController = {
       } else {
         const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
         const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
+
         const newUser = new User({
           username: name.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4),
           email,
@@ -81,12 +81,11 @@ const authController = {
           profilePicture: googlePhotoUrl
         });
         await newUser.save();
-        const token = jwt.sign({ id: user._id },
+        const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin },
           process.env.SECRET_KEY);
-        const { password, ...rest } = user._doc;
+        const { password, ...rest } = newUser._doc;
         return res
-          .cookie('access_token', token,
-            { httpOnly: true, secure: true })
+          .cookie('access_token', token, { httpOnly: true })
           .status(200)
           .json(rest);
       }

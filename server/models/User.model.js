@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
     type: 'string',
     required: true,
     unique: true,
-
   },
   email: {
     type: 'string',
@@ -20,6 +19,10 @@ const userSchema = new mongoose.Schema({
   profilePicture: {
     type: 'string',
     default: 'https://i0.wp.com/www.stignatius.co.uk/wp-content/uploads/2020/10/default-user-icon.jpg?fit=415%2C415&ssl=1',
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true }
 );
