@@ -51,9 +51,13 @@ const authController = {
       )
       // không trả ra password
       const { password: pass, ...rest } = validUser._doc;
-      res
-        .cookie('access_token', token, { httpOnly: true })
-        .status(200)
+      return res.status(200)
+        .cookie('access_token', token,
+          {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+          })
         .json(rest);
     } catch (e) {
       next(e);
@@ -69,7 +73,11 @@ const authController = {
           process.env.SECRET_KEY);
         const { password, ...rest } = user._doc;
         return res.status(200).cookie('access_token', token,
-          { httpOnly: true }).json(rest);
+          {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+          }).json(rest);
       } else {
         const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
         const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
@@ -80,13 +88,20 @@ const authController = {
           password: hashedPassword,
           profilePicture: googlePhotoUrl
         });
+
         await newUser.save();
-        const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin },
+        const token = jwt.sign(
+          { id: newUser._id, isAdmin: newUser.isAdmin },
           process.env.SECRET_KEY);
         const { password, ...rest } = newUser._doc;
         return res
-          .cookie('access_token', token, { httpOnly: true })
           .status(200)
+          .cookie('access_token', token,
+            {
+              httpOnly: true,
+              secure: true,
+              sameSite: 'strict',
+            })
           .json(rest);
       }
     } catch (e) {

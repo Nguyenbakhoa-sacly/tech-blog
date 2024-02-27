@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const userRouter = require('./routes/User.route')
-const authRouter = require('./routes/Auth.route')
+const userRoutes = require('./routes/User.route')
+const authRoutes = require('./routes/Auth.route')
+const postRoutes = require('./routes/Post.route')
 const app = express();
 
 dotenv.config();
@@ -13,10 +14,12 @@ app.use(express.json());
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
+  optionsSuccessStatus: 200,
 }));
 
-app.use('/api/v1/user', userRouter);
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/post', postRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
