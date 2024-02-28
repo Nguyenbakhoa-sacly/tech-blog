@@ -113,19 +113,24 @@ const DashProfile = () => {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
+      // type
       'state_changed',
+      // nextOrObserver
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImageFileUpLoadProgress(progress.toFixed(0));
       },
+      // error
       (error) => {
-        setImageFileUpLoadError('Could not upload image (File must be less than 2MB)')
+        setImageFileUpLoadError(
+          'Could not upload image (File must be less than 2MB)')
         setImageFileUpLoadProgress(null);
         setImageFileUrl(null);
         setImageFile(null);
         setImageFileUploading(false);
       },
+      // completed
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
           .then((downloadUrl) => {

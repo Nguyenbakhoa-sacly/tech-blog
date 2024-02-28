@@ -12,7 +12,11 @@ const postController = {
       return next(errorHandler(400,
         'Please provide all required fields'));
     }
-    const slug = title.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z0-9-]/g, '-');
+    const slug = title
+      .split(' ')
+      .join('-')
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9-]/g, '-');
     const newPost = new Post({
       ...req.body,
       slug,
