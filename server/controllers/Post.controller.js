@@ -1,4 +1,5 @@
-const Post = require('../models/Post.model')
+const Post = require('../models/Post.model');
+const { errorHandler } = require('../utils/error');
 
 const postController = {
 
@@ -84,6 +85,20 @@ const postController = {
         totalPosts,
         lastMonthPosts,
       });
+    } catch (e) {
+      next(e);
+    }
+  },
+  deletePost: async (req, res, next) => {
+    console.log(req.user);
+    console.log(req.params);
+    if (!req.user.isAdmin || req.user.userId
+      !== req.params.userId) {
+      return next(errorHandler(403, 'You are not allowed to delete this post'));
+    };
+    try {
+      await Post.findByIdAndDelete(req.params.postId);
+      res.status(200).json('The post has been deleted');
     } catch (e) {
       next(e);
     }
