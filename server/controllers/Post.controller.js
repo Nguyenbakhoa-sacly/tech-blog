@@ -102,6 +102,27 @@ const postController = {
     } catch (e) {
       next(e);
     }
+  },
+  updatePost: async (req, res, next) => {
+    if (!req.user.isAdmin || req.user.userId
+      !== req.params.userId) {
+      return next(errorHandler(403, 'You are not allowed to update this post'));
+    };
+    try {
+      const updatePost = await Post.findByIdAndUpdate(
+        req.params.postId, {
+        $set: {
+          title: req.body.title,
+          content: req.body.content,
+          category: req.body.category,
+          image: req.body.image,
+        }
+      }, { new: true }
+      );
+      res.status(200).json(updatePost);
+    } catch (e) {
+      next(e);
+    }
   }
 }
 module.exports = postController

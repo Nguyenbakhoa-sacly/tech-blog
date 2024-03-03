@@ -13,8 +13,8 @@ import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './pages/Dashboard'
 import OnlyAdminPrivateRoute from './components/OnlyAdminPrivateRoute'
 import CreatePost from './pages/CreatePost'
+import UpdatePost from './pages/UpdatePost'
 const App = () => {
-
   return (
     <>
       <Header />
@@ -29,6 +29,7 @@ const App = () => {
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
           <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/update-post/:postId' element={<UpdatePost />} />
         </Route>
       </Routes>
       <Footer />

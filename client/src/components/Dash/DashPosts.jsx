@@ -47,7 +47,6 @@ const DashPosts = () => {
       console.log(e);
     }
   };
-  console.log(userPosts);
   const handleDeletePost = async () => {
     setShowModal(false);
     try {

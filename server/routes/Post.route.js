@@ -8,4 +8,6 @@ router.post('/create', verifyToken,
 router.get('/getposts', postController.getPosts);
 router.delete('/deletepost/:postId/:userId',
   verifyToken, postController.deletePost);
+router.put('/updatepost/:postId/:userId',
+  verifyToken, postController.updatePost)
 module.exports = router
