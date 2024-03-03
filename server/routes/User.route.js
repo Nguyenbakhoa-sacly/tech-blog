@@ -8,4 +8,7 @@ router.put('/update/:userId', verifyToken,
 router.delete('/delete/:userId', verifyToken,
   userController.deleteUser);
 router.post('/signout', userController.signOut);
+router.get('/getusers', verifyToken, userController.getUsers)
+
+
 module.exports = router
