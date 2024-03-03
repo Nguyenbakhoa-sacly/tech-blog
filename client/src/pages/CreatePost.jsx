@@ -21,7 +21,7 @@ const CreatePost = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/api/v1/post/create`, {
+      const res = await fetch(`/api/v1/post/create`, {
         method: 'POST',
         credentials: 'include',
         headers: {

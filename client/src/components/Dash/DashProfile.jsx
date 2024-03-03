@@ -54,7 +54,7 @@ const DashProfile = () => {
     }
     try {
       dispatch(updateStart());
-      const res = await fetch(`http://localhost:3000/api/v1/user/update/${currentUser._id}`, {
+      const res = await fetch(`/api/v1/user/update/${currentUser._id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -77,7 +77,7 @@ const DashProfile = () => {
   };
   const handleSignOut = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/v1/user/signout`, {
+      const res = await fetch(`/api/v1/user/signout`, {
         method: 'POST',
       });
       const data = await res.json();

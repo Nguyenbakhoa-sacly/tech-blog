@@ -20,7 +20,7 @@ const DashSiderbar = () => {
 
   const handleSignOut = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/v1/user/signout`, {
+      const res = await fetch(`/api/v1/user/signout`, {
         method: 'POST',
       });
       const data = await res.json();

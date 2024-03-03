@@ -35,7 +35,7 @@ const DashPosts = () => {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `http://localhost:3000/api/v1/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
+        `/api/v1/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
       const data = await res.json();
       if (res.ok) {
         setUserPosts((prev) => [...prev, ...data.posts]);
@@ -50,7 +50,7 @@ const DashPosts = () => {
   const handleDeletePost = async () => {
     setShowModal(false);
     try {
-      const res = fetch(`http://localhost:3000/api/v1/post/deletepost/${postIdDelete}/${currentUser._id}`,
+      const res = fetch(`/api/v1/post/deletepost/${postIdDelete}/${currentUser._id}`,
         {
           method: 'DELETE',
           credentials: 'include',

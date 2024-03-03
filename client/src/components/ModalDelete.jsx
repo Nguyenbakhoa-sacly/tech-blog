@@ -12,7 +12,7 @@ const ModalDelete = ({ showModal, setShowModal }) => {
     setShowModal();
     try {
       dispatch(deleteStart());
-      const res = await fetch(`http://localhost:3000/api/v1/user/delete/${currentUser._id}`, {
+      const res = await fetch(`/api/v1/user/delete/${currentUser._id}`, {
         method: 'DELETE',
         credentials: 'include',
       });
