@@ -10,5 +10,4 @@ router.delete('/delete/:userId', verifyToken,
 router.post('/signout', userController.signOut);
 router.get('/getusers', verifyToken, userController.getUsers)
 
-
 module.exports = router

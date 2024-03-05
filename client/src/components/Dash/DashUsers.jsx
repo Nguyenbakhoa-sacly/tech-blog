@@ -50,23 +50,21 @@ const DashUsers = () => {
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
-      const res = fetch(`/api/v1/user/deleteuser/${userIdDelete}/${currentUser._id}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-        });
+      const res = await fetch(`/api/v1/user/delete/${userIdDelete}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
       const data = await res.json();
-      if (!res.ok) {
-        console.log(data.message);
+      if (res.ok) {
+        setUsers((prev) => prev.filter(
+          user => user._id !== userIdDelete))
       } else {
-        setUsers((prev) =>
-          prev.filter((user) => user._id != userIdDelete)
-        )
+        console.log(data.message);
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
-  }
+  };
   return (
     <>
       <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700
@@ -165,6 +163,7 @@ const DashUsers = () => {
             </div>
           </Modal.Body>
         </Modal>
+
       </div >
     </>
   )

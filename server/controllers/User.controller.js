@@ -51,8 +51,9 @@ const userController = {
       next(e);
     };
   },
+
   deleteUser: async (req, res, next) => {
-    if (req.user.userId !== req.params.userId) {
+    if (!req.user.isAdmin && req.user.userId !== req.params.userId) {
       return next(errorHandler(403,
         'You are not allowed to delete this user'));
     };
@@ -63,6 +64,7 @@ const userController = {
       next(e)
     }
   },
+
   signOut: async (req, res, next) => {
     try {
       res
@@ -73,6 +75,7 @@ const userController = {
       next(e);
     }
   },
+
   getUsers: async (req, res, next) => {
     if (!req.user.isAdmin) {
       return next(errorHandler(403,
