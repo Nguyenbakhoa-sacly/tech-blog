@@ -8,6 +8,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const CreatePost = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -147,6 +148,7 @@ const CreatePost = () => {
             onChange={(value) => setFormData(
               { ...formData, content: value })}
             theme='snow'
+            required
             placeholder='Write something...'
             className='h-72 mb-12'
           />

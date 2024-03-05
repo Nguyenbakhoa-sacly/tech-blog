@@ -111,13 +111,11 @@ const postController = {
     try {
       const updatePost = await Post.findByIdAndUpdate(
         req.params.postId, {
-        $set: {
-          title: req.body.title,
-          content: req.body.content,
-          category: req.body.category,
-          image: req.body.image,
-        }
-      }, { new: true }
+        title: req.body.title,
+        content: req.body.content,
+        category: req.body.category,
+        image: req.body.image,
+      }, { new: true, runValidators: true }
       );
       res.status(200).json(updatePost);
     } catch (e) {
