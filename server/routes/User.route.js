@@ -9,5 +9,6 @@ router.delete('/delete/:userId', verifyToken,
   userController.deleteUser);
 router.post('/signout', userController.signOut);
 router.get('/getusers', verifyToken, userController.getUsers)
-
+// get user comment
+router.get('/:userId', userController.getUser);
 module.exports = router
