@@ -2,7 +2,6 @@ const Post = require('../models/Post.model');
 const { errorHandler } = require('../utils/error');
 
 const postController = {
-
   postCreate: async (req, res, next) => {
     const { title, content } = req.body;
     if (!req.user.isAdmin) {
@@ -30,6 +29,7 @@ const postController = {
       next(e);
     }
   },
+
   getPosts: async (req, res, next) => {
     try {
       // Lấy vị trí bắt đầu của danh sách bài viết trả về (mặc định là 0).

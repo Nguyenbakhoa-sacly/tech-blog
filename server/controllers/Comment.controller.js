@@ -1,5 +1,6 @@
 const { errorHandler } = require("../utils/error");
-const Comment = require('../models/Comment.model')
+const Comment = require('../models/Comment.model');
+const { response } = require("express");
 
 const commentControllers = {
 
@@ -27,6 +28,30 @@ const commentControllers = {
       res.status(200).json(comments);
     } catch (e) {
       next(e);
+    }
+  },
+  likeComment: async (req, res, next) => {
+    try {
+      const comment = await Comment.findById(req.params.commentId);
+      if (!comment) {
+        return next(errorHandler(404, 'Comment not found!'));
+      }
+      // kiem tra xem nguoi dung da like comment hay chua
+      const userIndex = comment.likes.indexOf(req.user.userId);
+      if (userIndex === -1) {
+        // neu nguoi dung chua like binh luận thi them 1 like vao 
+        comment.numberOfLikes += 1;
+        comment.likes.push(req.user.userId);
+      } else {
+        // nguoi dung da thich binh luận roi, hay xóa hlượt thích
+        comment.numberOfLikes -= 1;
+        comment.likes.splice(userIndex, 1);
+      }
+      // luu like
+      await comment.save();
+      res.status(200).json(comment);
+    } catch (e) {
+      next(e)
     }
   }
 }
