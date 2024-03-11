@@ -5,4 +5,5 @@ const router = require('express').Router();
 router.post('/create', verifyToken, commentControllers.createComment);
 router.get('/getpostcomments/:postId', commentControllers.getPostComments);
 router.put('/likecomment/:commentId', verifyToken, commentControllers.likeComment);
+router.put('/editcomment/:commentId', verifyToken, commentControllers.editComment);
 module.exports = router

@@ -9,7 +9,6 @@ const CommentSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [commentError, setCommentError] = useState('');
   const { currentUser } = useSelector(state => state.user);
-  console.log(comments)
   const handleSubmitComment = async (e) => {
     e.preventDefault();
     if (comment.length > 200) return
@@ -61,7 +60,7 @@ const CommentSection = ({ postId }) => {
         return;
       }
       const res = await fetch(`/api/v1/comment/likecomment/${commentId}`, {
-        method: 'put',
+        method: 'PUT',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -80,7 +79,14 @@ const CommentSection = ({ postId }) => {
     } catch (e) {
       console.log(e.message)
     }
-  }
+  };
+
+  const handleEdit = (comment, editContent) => {
+    setComments(comments.map((com) =>
+      com._id === comment._id
+        ? { ...com, content: editContent } : com
+    ))
+  };
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
@@ -152,6 +158,7 @@ const CommentSection = ({ postId }) => {
                       comments.map(comment => (
                         <Comment
                           onLike={handleOnlike}
+                          onEdit={handleEdit}
                           key={comment._id}
                           comment={comment}
                         />
