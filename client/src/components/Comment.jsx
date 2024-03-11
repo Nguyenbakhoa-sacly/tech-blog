@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Textarea, Button } from 'flowbite-react'
 import { FaThumbsUp } from 'react-icons/fa'
 import { useSelector } from 'react-redux';
-const Comment = ({ key, comment, onLike, onEdit }) => {
+const Comment = ({ key, comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -41,7 +41,8 @@ const Comment = ({ key, comment, onLike, onEdit }) => {
     } catch (e) {
       console.log(e.message);
     }
-  }
+  };
+
   return (
     <div
       className='flex p-4 border-b dark:border-gray-600 text-sm'>
@@ -102,11 +103,18 @@ const Comment = ({ key, comment, onLike, onEdit }) => {
                 </p>
                 {
                   currentUser && (currentUser._id === currentUser.userId || currentUser.isAdmin) && (
-                    <button type='button'
-                      onClick={handleEdit}
-                      className='text-gray-400 hover:text-blue-500'>
-                      Edit
-                    </button>
+                    <>
+                      <button type='button'
+                        onClick={handleEdit}
+                        className='text-gray-400 hover:text-blue-500'>
+                        Edit
+                      </button>
+                      <button type='button'
+                        onClick={() => onDelete(comment._id)}
+                        className='text-gray-400 hover:text-red-500'>
+                        Delete
+                      </button>
+                    </>
                   )
                 }
               </div>
