@@ -7,4 +7,5 @@ router.get('/getpostcomments/:postId', commentControllers.getPostComments);
 router.put('/likecomment/:commentId', verifyToken, commentControllers.likeComment);
 router.put('/editcomment/:commentId', verifyToken, commentControllers.editComment);
 router.delete('/deletecomment/:commentId', verifyToken, commentControllers.deleteComment);
+router.get('/getcomments', verifyToken, commentControllers.getComments)
 module.exports = router

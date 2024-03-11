@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 const PostCard = ({ key, post }) => {
-  console.log(post);
   return (
-    <div className='group relative border w-full h-[350px] overflow-hidden border-teal-500 hover:border-2 transition-all rounded-lg sm:w-[360px]'>
+    <div key={key} className='group relative border w-full h-[350px] overflow-hidden border-teal-500 hover:border-2 transition-all rounded-lg sm:w-[360px]'>
       <Link to={`/post/${post.slug}`}>
         <img
           src={post.image}
@@ -13,6 +12,7 @@ const PostCard = ({ key, post }) => {
           <p className='text-lg font-semibold line-clamp-1'>{post.title}</p>
           <span className='italic text-sm'>{post.category}</span>
           <Link
+            as='div'
             className='z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-300 text-center py-2 rounded-md !rounded-tl-none m-2'
             to={`/post/${post.slug}`}>
             Read article
