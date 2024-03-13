@@ -5,7 +5,6 @@ import PostCard from '../components/PostCard';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  console.log(posts)
   useEffect(() => {
     try {
       (async () => {
