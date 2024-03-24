@@ -102,7 +102,7 @@ const Search = () => {
   return (
     <div className='pt-[61px]'>
       <div className='flex flex-col md:flex-row'>
-        <div className='p-7 border-b md:border-r md:min-h-screen border-gray-500'>
+        <div className='p-7 border-b md:border-r md:min-h-screen '>
           <form onSubmit={handleSubmit}
             className='flex flex-col gap-8'>
             <div className='flex items-center gap-2'>
@@ -149,7 +149,7 @@ const Search = () => {
           </form>
         </div>
         <div className='w-full'>
-          <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5'>Posts result</h1>
+          <h1 className='text-3xl font-semibold sm:border-b  p-3 mt-5'>Posts result</h1>
           <div className='p-7 flex flex-wrap gap-6'>
             {
               !loading && posts.length === 0 && (

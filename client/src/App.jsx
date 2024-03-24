@@ -16,6 +16,7 @@ import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import OnlyAdminPrivateRoute from './components/OnlyAdminPrivateRoute'
 import ScrollToTop from './components/ScrollToTop'
+import LiveChat from './components/LiveChat'
 const App = () => {
   return (
     <>
@@ -37,6 +38,7 @@ const App = () => {
           <Route path='/update-post/:postId' element={<UpdatePost />} />
         </Route>
       </Routes>
+      <LiveChat />
       <Footer />
     </>
   )

@@ -138,7 +138,7 @@ const CommentSection = ({ postId }) => {
           <>
             <form
               onSubmit={handleSubmitComment}
-              className='border border-teal-500 rounded-md p-3'>
+              className='border rounded-md p-3'>
               <Textarea
                 placeholder='Add a comment...'
                 rows='3'

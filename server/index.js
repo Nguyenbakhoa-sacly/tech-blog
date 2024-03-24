@@ -7,6 +7,7 @@ const userRoutes = require('./routes/User.route')
 const authRoutes = require('./routes/Auth.route')
 const postRoutes = require('./routes/Post.route')
 const commentRoutes = require('./routes/Comment.route')
+const emailRoutes = require('./routes/Email.route')
 const app = express();
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/post', postRoutes);
 app.use('/api/v1/comment', commentRoutes);
+app.use('/api/v1/email', emailRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
